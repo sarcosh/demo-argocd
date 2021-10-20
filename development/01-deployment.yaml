@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
        - name: demo-argocd
-         image: quay.io/sarcosh/demo-argocd:1.0.0 
+         image: quay.io/sarcosh/demo-argocd:1.0.1
          imagePullPolicy: Always
          livenessProbe: 
            httpGet: 
