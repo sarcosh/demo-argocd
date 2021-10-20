@@ -1,9 +1,9 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  name: micro-queue-management-backend-deployment
+  name: demo-argocd-deployment
   labels:
-    app: micro-queue-management-backend
+    app: demo-argocd
 spec:
   replicas: 3
   strategy:
@@ -11,43 +11,35 @@ spec:
   template:
     metadata:
       labels:
-        app: micro-queue-management-backend
+        app: demo-argocd
     spec:
       containers:
-       - name: micro-queue-management-backend
-         image: image-registry.openshift-image-registry.svc:5000/queue-management-dev/ubi8-queue-management-backend:1.0.0 
+       - name: demo-argocd
+         image: quay.io/sarcosh/demo-argocd:1.0.0
          imagePullPolicy: Always
          livenessProbe: 
            httpGet: 
              scheme: HTTP
-             path: /actuator/health
-             port: 8080 
+             path: /index.html
+             port: 8080
+           initialDelaySeconds: 2
+           timeoutSeconds: 1
+           periodSeconds: 5
          readinessProbe: 
            httpGet: 
              scheme: HTTP
-             path: /actuator/health
-             port: 8080 
+             path: /index.html
+             port: 8080
+           initialDelaySeconds: 2
+           timeoutSeconds: 1
+           periodSeconds: 5
          resources:
           limits:
-            cpu: 500m
+            cpu: 750m
             memory: 512Mi
           requests:
-            cpu: 300m
+            cpu: 750m
             memory: 512Mi
          ports:
           - containerPort: 8080
-         command:
-          - "/usr/bin/sh"
-          - "-c"
-          - "java -jar /deployments/app.jar"
-         env:
-          - name: SPRING_CONFIG_LOCATION
-            value: file:///config/application.yaml
-         volumeMounts:
-         - name: config-volume
-           mountPath: /config
       restartPolicy: Always
-      volumes:
-        - name: config-volume
-          configMap:
-            name: queue-backend-config

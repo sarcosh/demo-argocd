@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: micro-queue-management-backend-service
+  name: demo-argocd-service
   labels:
-    run: micro-queue-management-backend
+    run: demo-argocd
 spec:
   ports:
     - port: 8080
       protocol: TCP
   selector:
-    app: micro-queue-management-backend
+    app: demo-argocd
