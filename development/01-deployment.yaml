@@ -15,18 +15,24 @@ spec:
     spec:
       containers:
        - name: demo-argocd
-         image: quay.io/sarcosh/demo-argocd:1.0.1
+         image: quay.io/sarcosh/demo-argocd:1.0.0
          imagePullPolicy: Always
          livenessProbe: 
            httpGet: 
              scheme: HTTP
              path: /index.html
-             port: 8080 
+             port: 8080
+           initialDelaySeconds: 3
+           timeoutSeconds: 1
+           periodSeconds: 10
          readinessProbe: 
            httpGet: 
              scheme: HTTP
              path: /index.html
-             port: 8080 
+             port: 8080
+           initialDelaySeconds: 3
+           timeoutSeconds: 1
+           periodSeconds: 10
          resources:
           limits:
             cpu: 500m
