@@ -22,23 +22,23 @@ spec:
              scheme: HTTP
              path: /index.html
              port: 8080
-           initialDelaySeconds: 3
+           initialDelaySeconds: 2
            timeoutSeconds: 1
-           periodSeconds: 10
+           periodSeconds: 5
          readinessProbe: 
            httpGet: 
              scheme: HTTP
              path: /index.html
              port: 8080
-           initialDelaySeconds: 3
+           initialDelaySeconds: 2
            timeoutSeconds: 1
-           periodSeconds: 10
+           periodSeconds: 5
          resources:
           limits:
-            cpu: 500m
+            cpu: 750m
             memory: 512Mi
           requests:
-            cpu: 300m
+            cpu: 750m
             memory: 512Mi
          ports:
           - containerPort: 8080
