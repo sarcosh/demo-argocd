@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: micro-queue-management-backend 
+  name: micro-queue-management-backend-route
+spec:
+  host: backend-dev.apps.delorean.globalshared-dev.seat.cloud.vwgroup.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: micro-queue-management-backend-service
+    weight: 100

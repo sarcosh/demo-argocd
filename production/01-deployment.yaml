@@ -1,0 +1,53 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: micro-queue-management-backend-deployment
+  labels:
+    app: micro-queue-management-backend
+spec:
+  replicas: 3
+  strategy:
+   type: "Rolling"
+  template:
+    metadata:
+      labels:
+        app: micro-queue-management-backend
+    spec:
+      containers:
+       - name: micro-queue-management-backend
+         image: image-registry.openshift-image-registry.svc:5000/queue-management-dev/ubi8-queue-management-backend:1.0.0 
+         imagePullPolicy: Always
+         livenessProbe: 
+           httpGet: 
+             scheme: HTTP
+             path: /actuator/health
+             port: 8080 
+         readinessProbe: 
+           httpGet: 
+             scheme: HTTP
+             path: /actuator/health
+             port: 8080 
+         resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 512Mi
+         ports:
+          - containerPort: 8080
+         command:
+          - "/usr/bin/sh"
+          - "-c"
+          - "java -jar /deployments/app.jar"
+         env:
+          - name: SPRING_CONFIG_LOCATION
+            value: file:///config/application.yaml
+         volumeMounts:
+         - name: config-volume
+           mountPath: /config
+      restartPolicy: Always
+      volumes:
+        - name: config-volume
+          configMap:
+            name: queue-backend-config
