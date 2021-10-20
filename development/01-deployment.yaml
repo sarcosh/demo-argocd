@@ -20,12 +20,12 @@ spec:
          livenessProbe: 
            httpGet: 
              scheme: HTTP
-             path: /actuator/health
+             path: /index.html
              port: 8080 
          readinessProbe: 
            httpGet: 
              scheme: HTTP
-             path: /actuator/health
+             path: /index.html
              port: 8080 
          resources:
           limits:
